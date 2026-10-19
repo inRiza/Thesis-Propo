@@ -1,0 +1,48 @@
+%--------------------------------------------------------------------%
+% Proposal Tugas Akhir — build: make proposal → dist/proposal.pdf
+% Isi bab: proposal/chapters/chapter-1.tex … chapter-3.tex
+%--------------------------------------------------------------------%
+
+\documentclass[12pt, a4paper, onecolumn, oneside, final]{report}
+
+\input{../config/if-itb-thesis.sty}
+
+\makeatletter
+\makeatother
+
+\bibliography{../references}
+
+\begin{document}
+
+    \input{../config/document-info}
+
+    \pagenumbering{roman}
+    \setcounter{page}{0}
+
+    \input{chapters/cover}
+    \input{chapters/approval}
+
+    \pagestyle{plain}
+
+    \input{chapters/abstract-id}
+
+    \titleformat*{\section}{\centering\bfseries\Large\MakeUpperCase}
+
+    \tableofcontents
+    \listoffigures
+    \listoftables
+
+    \titleformat*{\section}{\bfseries\Large}
+    \pagenumbering{arabic}
+
+    \setcounter{page}{0}
+    \renewcommand{\chaptername}{BAB}
+    \renewcommand{\thechapter}{\Roman{chapter}}
+
+    \input{chapters/chapter-1}
+    \input{chapters/chapter-2}
+    \input{chapters/chapter-3}
+
+    \printbibliography
+
+\end{document}

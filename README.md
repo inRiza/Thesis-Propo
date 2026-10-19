@@ -42,8 +42,9 @@ Templat ini dilengkapi skrip kompilasi. Untuk membangun dokumen:
 **Linux/macOS:**
 
 ```bash
-make          # bersihkan lalu bangun
-make build    # bangun saja (tanpa clean)
+make          # bersihkan lalu bangun laporan TA (thesis.pdf)
+make build    # bangun saja (tanpa clean) → dist/thesis.pdf
+make proposal # bangun proposal TA → dist/proposal.pdf
 make validate # periksa sumber LaTeX dengan chktex
 make clean    # hapus artefak build
 ```
@@ -54,39 +55,39 @@ make clean    # hapus artefak build
 make.bat
 ```
 
-Hasil kompilasi berada di `dist/thesis.pdf`. File sementara latexmk disimpan di direktori `build/` (keduanya diabaikan oleh git).
+Hasil kompilasi berada di `dist/thesis.pdf` (laporan lengkap) atau `dist/proposal.pdf` (proposal TA). File sementara latexmk disimpan di direktori `build/` (keduanya diabaikan oleh git).
+
+### Proposal vs laporan akhir
+
+Proposal dan tesis **terpisah folder**; bab proposal tidak otomatis sama dengan laporan akhir (salin manual jika perlu).
+
+- Judul & penulis: `src/config/document-info.tex` (dipakai keduanya).
+- LaTeX Workshop default: `if-itb-latex/src/proposal/proposal.tex`; untuk laporan akhir ubah `latex-workshop.latex.rootFile` ke `if-itb-latex/src/thesis/thesis.tex`.
 
 ## Struktur Proyek
 
 ```text
 src/
-├── thesis.tex              # Berkas utama; atur judul, penulis, dan daftar bab
-├── references.bib          # Database referensi bibliografi
-├── config/
-│   ├── if-itb-thesis.sty   # Pengaturan format dokumen
-│   ├── informations.tex    # Informasi umum tesis
-│   └── hypenation-id.tex   # Aturan pemenggalan kata Bahasa Indonesia
-├── resources/
-│   ├── cover-ganesha.jpg
-│   ├── chapter-2-infrastructure-diagram.png
-│   ├── chapter-3-sample-requirements.csv
-│   └── chapter-3-sample-components.csv
-└── chapters/
-    ├── cover.tex           # Halaman sampul
-    ├── approval.tex        # Lembar persetujuan
-    ├── statement.tex       # Lembar pernyataan
-    ├── abstract-id.tex     # Abstrak Bahasa Indonesia
-    ├── abstract-en.tex     # Abstract (English)
-    ├── forewords.tex       # Kata pengantar
-    ├── chapter-1.tex … chapter-5.tex
-    └── appendix-1.tex, appendix-2.tex
+├── references.bib
+├── config/                 # if-itb-thesis.sty, document-info.tex, …
+├── resources/              # gambar, CSV (dipakai proposal & thesis)
+├── proposal/
+│   ├── proposal.tex
+│   └── chapters/
+│       ├── cover.tex, approval.tex, abstract-id.tex
+│       └── chapter-1.tex … chapter-3.tex
+└── thesis/
+    ├── thesis.tex
+    └── chapters/
+        ├── cover.tex, approval.tex, statement.tex, …
+        └── chapter-1.tex … chapter-5.tex, appendix-*.tex
 ```
 
 ## Menulis Tesis
 
 - Setiap berkas `.tex` memiliki komentar header di bagian atas yang menjelaskan fungsi berkas tersebut.
-- Atur `\title` dan `\author` di `src/thesis.tex`.
-- Tulis isi bab di `src/chapters/chapter-N.tex`. Untuk menambah bab baru, buat berkas baru lalu tambahkan `\input{chapters/chapter-N}` di `thesis.tex`.
+- Atur `\title` dan `\author` di `src/config/document-info.tex`.
+- Tulis proposal di `src/proposal/chapters/`; laporan akhir di `src/thesis/chapters/`.
 - Bab I–V dilengkapi teks panduan sebelum placeholder; ganti dengan isi sebenarnya saat menulis.
 - Teks placeholder (`\blindtext`) tersedia di bab, subbab, dan subsubbab — contoh struktur subbab ada di Bab III dan IV.
 - Tambahkan referensi di `src/references.bib` dan sitasi dengan `\parencite{key}`.
