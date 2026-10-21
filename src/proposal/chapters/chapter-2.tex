@@ -2,45 +2,170 @@
 %
 % Bab II — Tinjauan Pustaka
 %
-% @author Petra Novandi
+% @author Muhammad Rizain Firdaus
 %
 %--------------------------------------------------------------------%
 %
 % Berisi kajian literatur, dasar teori, dan studi terkait. Tambahkan
-% referensi baru di references.bib dan sitasi dengan \parencite{key}.
+% referensi baru di references.bib; sitasi: \parentcite, \textcite, \parencite.
 %
 %--------------------------------------------------------------------%
 
 \chapter{Tinjauan Pustaka}
 
-Bab Studi Literatur digunakan untuk mendeskripsikan kajian literatur yang terkait dengan persoalan tugas akhir. Tujuan studi literatur adalah:
+\section{Dasar Teori}
 
-\begin{enumerate}
-    \item menunjukkan kepada pembaca adanya gap seperti pada rumusan masalah yang memang belum terselesaikan,
-    \item memberikan pemahaman yang secukupnya kepada pembaca tentang teori atau pekerjaan terkait yang terkait langsung dengan penyelesaian persoalan, serta
-    \item menyampaikan informasi apa saja yang sudah ditulis/dilaporkan oleh pihak lain (peneliti/Tugas Akhir/Tesis) tentang hasil penelitian/pekerjaan mereka yang sama atau mirip kaitannya dengan persoalan tugas akhir.
+\subsection{Kolaborasi Sosio-Teknikal dalam Pengembangan Perangkat Lunak}
+Perangkat lunak modern umumnya dikembangkan oleh tim multidisiplin yang anggotanya memiliki spesialisasi, latar belakang, dan pengetahuan yang tersebar (\textit{distributed knowledge}).
+Sebagaimana ditekankan oleh \textcite{gote2023locating}, keberhasilan suatu proyek perangkat lunak sangat bergantung pada efektivitas tim dalam menggabungkan pengetahuan tersebut sepanjang siklus hidup pengembangan perangkat lunak (\textit{Software Development Life Cycle}/SDLC).
+Aktivitas ini melibatkan interaksi lintas platform antara pemrogram, analis, desainer, penguji, dan manajer proyek, mulai dari pelacakan isu (\textit{issue tracking}) hingga peninjauan dan integrasi kode (\textit{code review}).
+Gambar~\ref{fig:chapter2-sdlc-collaboration} merangkum alur kolaborasi tersebut secara abstrak.
+
+\input{../resources/figures/chapter-2-sdlc-collaboration.tex}
+
+Keterkaitan antara struktur sosial tim dan struktur teknis sistem telah lama diamati.
+\textcite{conway1968committees} menyatakan bahwa organisasi yang merancang suatu sistem cenderung menghasilkan rancangan yang mencerminkan struktur komunikasi organisasi tersebut.
+Gagasan ini kemudian dirumuskan secara kuantitatif oleh \textcite{cataldo2008congruence} melalui konsep kongruensi sosio-teknikal (\textit{socio-technical congruence}), yaitu tingkat kesesuaian antara kebutuhan koordinasi yang muncul dari ketergantungan teknis dengan koordinasi yang benar-benar terjadi di dalam tim.
+Ketika kebutuhan koordinasi tersebut tidak terpenuhi, kinerja tim menurun.
+
+Dalam ekosistem sosio-teknikal tersebut, setiap pengembang membawa keahlian spesifik dan pengetahuan implisit (\textit{tacit knowledge}) yang menentukan perannya dalam siklus pengembangan.
+Apabila interaksi antaranggota tim tidak terkelola dengan baik, muncul friksi komunikasi yang berujung pada akumulasi biaya proyek tersembunyi.
+Fenomena ini dalam literatur rekayasa perangkat lunak disebut utang sosial (\textit{social debt}) \parencite{tamburri2013social}, dan manifestasinya berupa pola interaksi negatif yang disebut \textit{community smells} \parencite{tamburri2015}.
+
+\subsection{Utang Sosial (\textit{Social Debt}) dan \textit{Community Smells}}
+Konsep utang sosial diadopsi sebagai analogi dari utang teknis (\textit{technical debt}), yaitu metafora yang diperkenalkan \textcite{cunningham1992wycash} untuk menggambarkan biaya di masa depan akibat kompromi teknis yang diambil demi kecepatan pengembangan.
+\textcite{tamburri2013social} mendefinisikan utang sosial sebagai biaya tidak terduga yang ditanggung proyek perangkat lunak akibat keputusan, struktur organisasi, atau pola komunikasi antarpengembang yang suboptimal.
+Jika utang teknis berfokus pada kompromi kualitas pada tingkat arsitektur dan kode, utang sosial menyoroti kompromi pada ranah interaksi manusia dan kolaborasi tim yang membangun perangkat lunak tersebut.
+
+Utang sosial umumnya dipicu oleh hilangnya atau terfragmentasinya pengetahuan implisit di dalam tim \parencite{gote2023locating}.
+Pengetahuan implisit mencakup pemahaman mengenai sejarah keputusan desain, asumsi keamanan, serta kompleksitas suatu modul yang sering kali tidak terdokumentasi secara formal dan hanya melekat pada individu tertentu.
+Ketika terjadi jarak kognitif (\textit{cognitive distance}) atau friksi komunikasi antaranggota tim, aliran pengetahuan ini terhambat.
+Akibatnya, pengembang lain harus bekerja dengan informasi yang tidak lengkap dan asumsi yang belum terverifikasi, sehingga risiko kesalahan manusia (\textit{human error}) meningkat.
+
+Gejala yang dapat diamati dari utang sosial disebut \textit{community smells}, yaitu pola organisasi dan sosial yang suboptimal di dalam komunitas pengembang \parencite{tamburri2015}.
+Beberapa jenis \textit{community smells} yang paling sering dikaji antara lain \parencite{tamburri2021exploring}:
+\begin{itemize}
+    \item \textbf{\textit{Organizational silo}}: sub-kelompok di dalam tim yang bekerja terpisah dan hampir tidak berkomunikasi dengan sub-kelompok lain.
+    \item \textbf{\textit{Lone wolf}}: pengembang yang bekerja pada bagian kode bersama tetapi tidak berkomunikasi dengan rekan yang terdampak oleh pekerjaannya.
+    \item \textbf{\textit{Black cloud}}: kelebihan atau kekacauan informasi akibat tidak adanya mekanisme pertukaran pengetahuan yang terstruktur.
+    \item \textbf{\textit{Radio silence} (\textit{bottleneck})}: satu individu menjadi perantara tunggal arus informasi antar-sub-kelompok sehingga memperlambat komunikasi.
+\end{itemize}
+Dampak \textit{community smells} tidak berhenti pada penurunan efisiensi atau keterlambatan rilis.
+\textcite{palomba2018beyond} menunjukkan bahwa faktor komunitas, termasuk \textit{community smells}, berkontribusi terhadap meningkatnya intensitas \textit{code smells}, sehingga utang sosial dapat memicu utang teknis baru dan menurunkan kualitas basis kode.
+
+\subsection{Pemodelan Jaringan Orde Tinggi dan MOGen}
+
+\subsubsection{Keterbatasan Analisis Jaringan Sosial Tradisional}
+Analisis jaringan sosial (\textit{Social Network Analysis}/SNA) tradisional umumnya merepresentasikan interaksi antarpengembang sebagai graf orde pertama (\textit{first-order graph}), yaitu kumpulan hubungan berpasangan (\textit{dyadic}) yang dianalisis secara terpisah.
+Ketika graf tersebut digunakan untuk memodelkan aliran informasi, pendekatan ini secara implisit mengasumsikan sifat Markov orde pertama: langkah interaksi berikutnya hanya bergantung pada keadaan saat ini, tanpa memperhitungkan riwayat langkah sebelumnya \parencite{scholtes2017network}.
+Padahal, alur komunikasi dalam pengembangan perangkat lunak (pelaporan isu, diskusi, hingga peninjauan kode) bersifat sekuensial dan bergantung pada riwayat (\textit{memory-dependent}).
+\textcite{rosvall2014memory} menunjukkan bahwa mengabaikan memori dalam aliran jaringan dapat mengubah secara signifikan kesimpulan mengenai dinamika penyebaran dan struktur komunitas.
+Dalam konteks tim pengembang, hal ini berarti model orde pertama dapat salah merepresentasikan penyebaran pengetahuan (\textit{knowledge diffusion}) serta menyembunyikan struktur isolasi sosial di dalam tim \parencite{gote2023locating}.
+Perbedaan kedua pendekatan digambarkan pada Gambar~\ref{fig:chapter2-mogen-vs-first-order}.
+
+\input{../resources/figures/chapter-2-first-order-vs-mogen.tex}
+
+\subsubsection{Kerangka Kerja \textit{Multi-Order Generative Model} (MOGen)}
+Untuk mengatasi keterbatasan tersebut, \textcite{gote2023mogen} mengembangkan \textit{Multi-Order Generative model for paths} (MOGen), yaitu model generatif yang menggabungkan rantai Markov dari beberapa orde, mulai dari orde pertama hingga orde maksimum $K$, ke dalam satu model yang tetap dibatasi oleh topologi jaringan.
+MOGen memodelkan data jalur (\textit{path data}) dengan panjang yang bervariasi dan secara eksplisit menambahkan keadaan awal (\textit{initial state}) dan keadaan akhir (\textit{terminal state}) pada setiap jalur.
+Dengan demikian, MOGen dapat menghitung secara analitis probabilitas dimulai, berlanjut, dan berakhirnya suatu jalur interaksi.
+\textcite{gote2023locating} kemudian menerapkan MOGen pada proses pengembangan perangkat lunak, yaitu urutan alur kerja pengembang seperti pelaporan isu, diskusi, dan peninjauan kode, untuk menemukan lokasi \textit{community smells} di dalam proses tersebut.
+
+\subsubsection{Mekanisme Kerja Kerangka Kerja MOGen}
+MOGen tidak menghitung metrik jaringan langsung dari graf interaksi, tetapi terlebih dahulu membangun model generatif berbasis rantai Markov yang merepresentasikan aliran interaksi tim pengembang \parencite{gote2023mogen}.
+Proses kerja MOGen terdiri atas tiga tahapan utama:
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=2.8em, itemsep=0.7em, parsep=0.25em]
+    \item \textbf{Pemrosesan Data Jalur dan Keadaan Khusus}\\
+    Langkah awal MOGen adalah mentransformasikan riwayat aktivitas pengembang (tiket isu, diskusi, \textit{pull request}, dan sebagainya) menjadi data jalur.
+    Misalkan $P = \{p_1, p_2, \ldots, p_N\}$ adalah himpunan data jalur interaksi, dan setiap jalur $p_i = (v_1, v_2, \ldots, v_L)$ merupakan urutan simpul (\textit{nodes}) $v \in V$ yang merepresentasikan pengembang.
+    MOGen secara eksplisit menambahkan dua keadaan khusus \parencite{gote2023mogen}:
+    \begin{itemize}[leftmargin=1.6em]
+        \item \textbf{Keadaan awal $S_{0}$ (\textit{initial state})}: menandai dimulainya suatu alur interaksi (misalnya pembuatan tiket isu baru).
+        \item \textbf{Keadaan akhir $S_{\mathrm{target}}$ (\textit{terminal state})}: menandai berakhirnya suatu alur interaksi (misalnya integrasi kode selesai atau tiket isu ditutup).
+    \end{itemize}
+    Dengan demikian, suatu jalur lengkap direpresentasikan sebagai
+    \begin{equation}
+    p_i = (S_{0}, v_1, v_2, \ldots, v_L, S_{\mathrm{target}}).
+    \end{equation}
+    Pada makalah aslinya, kedua keadaan ini dilambangkan dengan $*$ dan $\dagger$.
+
+    \item \textbf{Pembentukan Ruang Keadaan dan Matriks Transisi Orde Tinggi}\\
+    Untuk menangkap memori interaksi sepanjang $k$ langkah, MOGen memetakan jalur ke dalam ruang keadaan orde tinggi (\textit{higher-order state space}) $\mathcal{S}^{(k)}$.
+    Setiap keadaan $s \in \mathcal{S}^{(k)}$ mewakili sub-jalur sepanjang $k$:
+    \begin{equation}
+    s = (v_{i-k+1}, \ldots, v_i).
+    \end{equation}
+    Probabilitas transisi dari keadaan $s = (v_1, \ldots, v_k)$ menuju simpul berikutnya $v_{k+1}$ diestimasi dari frekuensi observasi pada data jalur historis:
+    \begin{equation}
+    P(v_{k+1} \mid v_1, \ldots, v_k)
+    = \frac{A(v_1, \ldots, v_k, v_{k+1})}
+    {\sum\limits_{u \in V \cup \{S_{\mathrm{target}}\}} A(v_1, \ldots, v_k, u)},
+    \end{equation}
+    dengan $A(v_1, \ldots, v_k, v_{k+1})$ adalah frekuensi kemunculan sub-jalur $(v_1, \ldots, v_k, v_{k+1})$ pada seluruh himpunan $P$.
+    Transisi dari seluruh orde $k = 1, \ldots, K$ disusun menjadi satu matriks transisi multi-orde $T^{(K)}$.
+    Orde maksimum optimal $K$ dipilih secara otomatis dari data menggunakan \textit{Akaike Information Criterion} (AIC) \parencite{akaike1974new}, yang menyeimbangkan kecocokan model terhadap data dengan jumlah parameter model \parencite{gote2023mogen}.
+
+    \item \textbf{Analisis Eksak Berbasis Matriks Fundamental}\\
+    Setelah $T^{(K)}$ terbentuk, keadaan pada model dipisahkan menjadi keadaan transien (\textit{transient states}), yaitu keadaan selama interaksi masih berlangsung, dan keadaan penyerap (\textit{absorbing state}), yaitu keadaan akhir $S_{\mathrm{target}}$.
+    Sub-matriks transisi antarkeadaan transien dinotasikan sebagai $Q$.
+    MOGen menggunakan \textbf{matriks fundamental rantai Markov} $F$ \parencite{kemeny1960finite} untuk menghitung dinamika aliran interaksi secara analitis tanpa simulasi numerik \parencite{gote2023locating}:
+    \begin{equation}
+    F = (I - Q)^{-1} = \sum_{l=0}^{\infty} Q^l,
+    \end{equation}
+    dengan $I$ adalah matriks identitas.
+    Elemen $F_{ij}$ menyatakan nilai harapan banyaknya kunjungan ke keadaan $j$ sebelum jalur berakhir, apabila jalur dimulai dari keadaan $i$.
 \end{enumerate}
 
-\blindtext
+\subsubsection{Metrik Sentralitas Berbasis Jalur (\textit{Path Centralities})}
+Berdasarkan matriks transisi multi-orde dan matriks fundamental $F$, \textcite{gote2023locating} mendefinisikan sekumpulan metrik sentralitas berbasis jalur yang dapat dihitung secara eksak.
+Metrik-metrik tersebut digunakan untuk menemukan lokasi \textit{community smells} di dalam proses pengembangan:
+\begin{enumerate}[leftmargin=2.8em]
+    \item \textbf{\textit{Path betweenness}}: mengukur seberapa sering seorang pengembang menjadi perantara pada jalur interaksi antarpengembang lain. Nilai yang tinggi mengindikasikan potensi \textit{bottleneck} komunikasi.
+    \item \textbf{\textit{Path closeness}}: mengukur seberapa cepat seorang pengembang dapat dijangkau dari pengembang lain melalui jalur interaksi.
+    \item \textbf{\textit{Path reach}}: mengukur seberapa jauh jalur interaksi yang melewati seorang pengembang dapat menjangkau bagian lain dari jaringan, sebagai indikator efektivitas penyebaran pengetahuan.
+    \item \textbf{\textit{Path end} dan \textit{path continuation}}: mengukur kecenderungan jalur interaksi untuk berakhir atau berlanjut setelah melewati seorang pengembang, yang mengindikasikan titik terputusnya atau berlanjutnya aliran informasi.
+\end{enumerate}
 
-\blindtext
+% \input{../resources/figures/chapter-2-path-betweenness.tex}
 
-\section{Dasar Teori}
-Perujukan literatur dapat dilakukan dengan menambahkan entri baru di berkas. Tulisan ini merujuk pada \parencite{knuth2001art}
+\subsection{Kerentanan Perangkat Lunak dan Faktor Sosio-Teknikal}
+Dalam literatur rekayasa perangkat lunak, kerentanan (\textit{software vulnerabilities}) umumnya dipandang sebagai kegagalan teknis yang berkaitan dengan artefak teknis seperti kode sumber, konfigurasi, atau modul yang gagal lolos skenario pengujian.
+Pendekatan prediksi kerentanan pun umumnya mengandalkan metrik kode seperti kompleksitas dan \textit{code churn}.
+Namun, \textcite{shin2011evaluating} menunjukkan bahwa metrik aktivitas pengembang, termasuk metrik jaringan pengembang, juga mampu membedakan berkas yang rentan dari berkas yang tidak rentan.
+Temuan serupa dilaporkan oleh \textcite{meneely2009secure} pada kernel Linux: berkas yang diubah oleh banyak pengembang secara terpisah justru lebih berisiko mengandung kerentanan, bertolak belakang dengan anggapan bahwa ``banyak mata'' selalu menghasilkan kode yang lebih aman.
+Dari sisi kualitas secara umum, \textcite{bird2011ownership} menunjukkan bahwa komponen dengan banyak kontributor minor (kepemilikan kode rendah) cenderung memiliki lebih banyak cacat.
 
-    \subsection{Subbab}
+Temuan-temuan tersebut mengarah pada hipotesis bahwa struktur sosial tim memengaruhi keamanan kode.
+Modul yang dikembangkan dalam kondisi komunikasi yang terfragmentasi, yaitu ketika pengembang bekerja secara terisolasi tanpa pertukaran pengetahuan yang memadai, cenderung luput dari peninjauan anggota lain yang memahami aspek keamanan (\textit{security review gap}).
+Ketika pengetahuan implisit mengenai asumsi keamanan hanya dikuasai segelintir individu, modifikasi atau penambahan fitur pada modul kritis menjadi rentan terhadap kesalahan manusia, yang dapat membuka celah untuk dieksploitasi di lingkungan produksi.
+Oleh karena itu, menggabungkan analisis struktur sosial tim dengan pemantauan basis kode berpotensi menjadi pendekatan preventif: area modul yang dikelola oleh struktur sosial berisiko tinggi dapat diidentifikasi lebih awal, sebelum celahnya berkembang menjadi pembobolan sistem (\textit{security breach}).
 
-    \blindtext
+\section{Studi Literatur}
+Bagian ini mengkaji penelitian terdahulu yang menjadi fondasi atau berkaitan erat dengan topik tugas akhir ini.
+Kajian dikelompokkan menjadi empat bagian: konseptualisasi utang sosial, deteksi dan dampak \textit{community smells}, faktor sosial terhadap kerentanan perangkat lunak, serta pemodelan jaringan orde tinggi pada proses pengembangan perangkat lunak.
 
-    \begin{figure}[h]
-        \centering
-        \includegraphics[width=0.8\textwidth]{../resources/chapter-2-infrastructure-diagram.png}
-        \caption{Contoh gambar}
-    \end{figure}
+\subsection{Konseptualisasi Utang Sosial (\textit{Social Debt})}
+\textcite{tamburri2013social} pertama kali memperkenalkan utang sosial sebagai biaya tersembunyi akibat struktur komunikasi dan dinamika kolaborasi yang suboptimal dalam tim pengembang.
+Penelitian lanjutan oleh \textcite{tamburri2015} melalui studi di industri memperluas konsep tersebut dengan mengidentifikasi \textit{community smells} sebagai gejala utang sosial, seperti isolasi pengembang dan sub-kelompok yang terputus.
+Namun, pendekatan pada tahap ini masih bersifat kualitatif dan bergantung pada wawancara atau survei, sehingga sulit diterapkan secara otomatis pada repositori berskala besar.
 
-    \subsubsection{Subsubbab}
+\subsection{Deteksi dan Dampak \textit{Community Smells}}
+\textcite{tamburri2021exploring} mengembangkan CodeFace4Smells, alat untuk mendeteksi empat jenis \textit{community smells} secara otomatis dari data kolaborasi dan komunikasi pengembang.
+Studi mereka pada 60 komunitas sumber terbuka menunjukkan bahwa \textit{community smells} tersebar luas dan dipandang pengembang sebagai masalah nyata.
+Selanjutnya, \textcite{palomba2018beyond} melakukan studi metode campuran pada 117 rilis dari sembilan sistem sumber terbuka dan menemukan bahwa faktor komunitas, termasuk \textit{community smells} seperti \textit{organizational silo} dan \textit{lone wolf}, berkontribusi terhadap intensitas \textit{code smells}.
+Kedua penelitian ini masih merepresentasikan interaksi pengembang sebagai jaringan statis, sehingga belum menangkap urutan kronologis interaksi.
+Selain itu, dampak yang dikaji terbatas pada kualitas kode secara umum, belum pada kerentanan keamanan.
 
-    \blindtext
+\subsection{Faktor Sosial terhadap Kerentanan Perangkat Lunak}
+\textcite{meneely2009secure} menguji ``hukum Linus'' pada kernel Linux dan menemukan bahwa berkas yang diubah oleh sembilan pengembang atau lebih memiliki kemungkinan sekitar 16 kali lebih besar untuk mengandung kerentanan.
+\textcite{shin2011evaluating} kemudian menunjukkan bahwa metrik kompleksitas, \textit{code churn}, dan aktivitas pengembang dapat digunakan sebagai indikator kerentanan pada Mozilla Firefox dan Red Hat Enterprise Linux.
+Kedua penelitian ini membuktikan adanya hubungan antara struktur kolaborasi dan keamanan, tetapi metrik yang digunakan masih berupa jaringan pengembang orde pertama dan tidak secara eksplisit mengaitkannya dengan \textit{community smells}.
 
-\section{Studi Terkait}
-\blindtext
+\subsection{Pemodelan Jaringan Orde Tinggi pada Proses Pengembangan}
+\textcite{gote2023mogen} memperkenalkan MOGen dan menunjukkan bahwa model ini lebih unggul dibandingkan metode pemodelan sekuens lain dalam memprediksi jalur pada data empiris.
+\textcite{gote2023locating} kemudian membangun metrik sentralitas berbasis jalur di atas MOGen dan menerapkannya pada tim produk di genua GmbH, sebuah perusahaan keamanan TI.
+Dengan menganalisis data pelacak isu dan platform peninjauan kode, mereka menemukan dua \textit{community smells} pada dua bagian proses pengembangan, yaitu \textit{bottleneck} pada proses penutupan isu dan proses integrasi kode yang hanya ditangani segelintir anggota senior.
+Temuan ini divalidasi melalui wawancara dengan anggota tim.
+Meskipun demikian, penelitian tersebut berhenti pada lokasi \textit{community smells} dan belum mengaitkan metrik sentralitas jalur dengan kerentanan keamanan pada basis kode.
+
+Tugas akhir ini mengisi kesenjangan tersebut dengan menganalisis dampak \textit{community smells} terhadap kerentanan perangkat lunak menggunakan metrik sentralitas berbasis jalur MOGen.

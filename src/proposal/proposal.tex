@@ -1,6 +1,6 @@
 %--------------------------------------------------------------------%
 % Proposal Tugas Akhir — build: make proposal → dist/proposal.pdf
-% Isi bab: proposal/chapters/chapter-1.tex … chapter-3.tex
+% Draft: Bab II aktif; Bab I, Bab III, dan Abstrak dikosongkan sementara.
 %--------------------------------------------------------------------%
 
 \documentclass[12pt, a4paper, onecolumn, oneside, final]{report}
@@ -9,8 +9,6 @@
 
 \makeatletter
 \makeatother
-
-\bibliography{../references}
 
 \begin{document}
 
@@ -26,13 +24,10 @@
 
     \input{chapters/abstract-id}
 
-    \titleformat*{\section}{\centering\bfseries\Large\MakeUpperCase}
-
     \tableofcontents
     \listoffigures
     \listoftables
 
-    \titleformat*{\section}{\bfseries\Large}
     \pagenumbering{arabic}
 
     \setcounter{page}{0}
@@ -43,6 +38,6 @@
     \input{chapters/chapter-2}
     \input{chapters/chapter-3}
 
-    \printbibliography
+    \printbibliography[heading=bibintoc, title={Daftar Pustaka}]
 
 \end{document}
