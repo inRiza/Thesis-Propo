@@ -1,0 +1,28 @@
+% Ilustrasi: kolaborasi socio-teknikal pada SDLC
+\begin{figure}[htbp]
+    \centering
+    \resizebox{0.62\linewidth}{!}{%
+    \begin{tikzpicture}[
+        node distance=1.8cm and 2.5cm,
+        role/.style={draw=orange!70!black, fill=orange!10, thick, rounded corners=4pt, align=center, minimum width=2.8cm, minimum height=1.2cm, font=\small},
+        artifact/.style={draw=black!40, fill=white, thick, rounded corners=4pt, align=center, minimum width=2.8cm, minimum height=1.2cm, font=\small},
+        flow/.style={-{Stealth[length=2.5mm]}, thick, draw=black!60},
+        conntext/.style={font=\scriptsize, text=black!80, inner sep=6pt}
+    ]
+        % Nodes
+        \node[role] (dev) {\faUserCog\\[3pt]Pengembang\\(peran berbeda)};
+        \node[artifact, right=of dev] (issue) {\faTasks\\[3pt]Pelacakan isu\\(\textit{issue tracking})};
+        \node[artifact, below=of issue] (review) {\faCodeBranch\\[3pt]Peninjauan kode\\(\textit{code review})};
+        \node[artifact, left=of review] (repo) {\faDatabase\\[3pt]Basis kode\\(\textit{repository})};
+
+        % Paths
+        \draw[flow] (dev) -- node[above, conntext]{lapor / diskusi} (issue);
+        \draw[flow] (issue) -- node[right, conntext]{integrasi} (review);
+        \draw[flow] (review) -- node[below, conntext]{commit} (repo);
+        \draw[flow] (repo) -- node[left, conntext]{perbaikan} (dev);
+
+    \end{tikzpicture}%
+    }
+    \caption{Alur interaksi \textit{multi-platform} antar peran pengembang pada siklus hidup pengembangan perangkat lunak}
+    \label{fig:chapter2-sdlc-collaboration}
+\end{figure}

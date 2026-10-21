@@ -1,0 +1,26 @@
+% Ilustrasi: rantai utang sosial
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzpicture}[
+        node distance=0.6cm and 0.4cm,
+        box/.style={draw, rounded corners=3pt, thick, align=center, minimum width=2.6cm,
+            minimum height=0.9cm, font=\small},
+        flow/.style={-{Stealth[length=2.5mm]}, thick, draw=black!70}
+    ]
+        \node[box, fill=teal!10, draw=teal!60!black] (tacit) {Pengetahuan implisit\\(\textit{tacit knowledge})};
+        \node[box, fill=yellow!15, draw=yellow!60!black, below=of tacit] (frag) {Fragmentasi \&\\jarak kognitif};
+        \node[box, fill=orange!15, draw=orange!60!black, below=of frag] (friction) {Friksi\\komunikasi};
+        \node[box, fill=red!15, draw=red!60!black, below=of friction] (sd) {Utang sosial\\(\textit{social debt})};
+        
+        \node[box, fill=red!5, draw=red!40!black, dashed, below left=0.9cm and 0.2cm of sd] (smell) {\textit{Community}\\smells};
+        \node[box, fill=red!5, draw=red!40!black, dashed, below right=0.9cm and 0.2cm of sd] (td) {Utang teknis \&\\risiko kualitas};
+
+        \draw[flow] (tacit) -- (frag);
+        \draw[flow] (frag) -- (friction);
+        \draw[flow] (friction) -- (sd);
+        \draw[flow] (sd) -- (smell);
+        \draw[flow] (sd) -- (td);
+    \end{tikzpicture}
+    \caption{Rangkaian pembentukan utang sosial dari hilangnya aliran pengetahuan implisit (disusun berdasarkan \textcite{tamburri2013social} dan \textcite{palomba2018beyond})}
+    \label{fig:chapter2-social-debt}
+\end{figure}

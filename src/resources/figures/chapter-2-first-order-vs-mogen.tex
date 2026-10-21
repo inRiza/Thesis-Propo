@@ -1,0 +1,84 @@
+% Perbandingan graf orde-pertama vs jalur MOGen (TikZ; Gote et al. 2023)
+% Layout vertikal; S_0 / S_target; transisi C_t
+\begin{figure}[htbp]
+    \centering
+    \resizebox{0.92\linewidth}{!}{%
+    \begin{tikzpicture}[
+        x=1cm, y=1cm,
+        fig node/.style={circle, draw=black!50, fill=white, thick,
+            minimum size=0.85cm, font=\small\bfseries, inner sep=0pt},
+        fig highlight/.style={circle, draw=orange!70!black, fill=orange!12, thick,
+            minimum size=0.85cm, font=\small\bfseries, inner sep=0pt},
+        fig state/.style={draw=black!40, fill=white, dashed, thick, rounded corners=3pt,
+            minimum height=0.85cm, minimum width=1.55cm, font=\small, inner sep=2pt, align=center},
+        fig edge/.style={thick, draw=black!50},
+        fig flow/.style={-{Stealth[length=2.2mm]}, thick, draw=black!55},
+        fig panel/.style={draw=black!25, fill=white, rounded corners=5pt},
+        fig label/.style={font=\scriptsize, text=black!75, inner sep=2pt, fill=white},
+        fig note/.style={font=\scriptsize, text=black!65, align=center},
+        fig title/.style={font=\small\bfseries, text=black!70},
+    ]
+
+    % ===== Panel (a): first-order dyadic (atas) =====
+    % Tinggi cukup: judul + graf + celah + catatan (tanpa tumpang tindih)
+    \node[fig panel, minimum width=12.2cm, minimum height=5.8cm, anchor=north west]
+        (L) at (0,0) {};
+    \node[fig title, anchor=north west] at ([xshift=0.3cm, yshift=-0.25cm]L.north west)
+        {(a) Graf orde-pertama (\textit{dyadic})};
+
+    % Graf di zona tengah-atas panel (jauh dari catatan bawah)
+    \coordinate (A) at ([xshift=6.1cm, yshift=-1.85cm]L.north west);
+    \coordinate (B) at ([xshift=4.3cm, yshift=-3.55cm]L.north west);
+    \coordinate (C) at ([xshift=7.9cm, yshift=-3.55cm]L.north west);
+
+    \draw[fig edge] (A) -- (B);
+    \draw[fig edge] (A) -- (C);
+    \draw[fig edge] (B) -- (C);
+
+    \node[fig node] at (A) {A};
+    \node[fig node] at (B) {B};
+    \node[fig node] at (C) {C};
+
+    % Catatan di zona bawah dengan celah jelas dari node B/C
+    \node[fig note, anchor=south] at ([yshift=0.35cm]L.south)
+        {Interaksi digabung menjadi tepi berpasangan.\\[2pt]
+         Urutan langkah hilang tanpa adanya \textit{state} yang menyimpan.};
+
+    % ===== Panel (b): MOGen path (bawah) =====
+    \node[fig panel, minimum width=12.2cm, minimum height=5.2cm, anchor=north west]
+        (R) at (0,-6.2) {};
+    \node[fig title, anchor=north west] at ([xshift=0.3cm, yshift=-0.25cm]R.north west)
+        {(b) Jalur MOGen (orde-$K$)};
+
+    % Jalur di tengah panel, label C_t di atas, catatan di bawah
+    \coordinate (S0) at ([xshift=1.15cm, yshift=-2.45cm]R.north west);
+    \coordinate (PA) at ([xshift=3.55cm, yshift=-2.45cm]R.north west);
+    \coordinate (PB) at ([xshift=5.95cm, yshift=-2.45cm]R.north west);
+    \coordinate (PC) at ([xshift=8.35cm, yshift=-2.45cm]R.north west);
+    \coordinate (ST) at ([xshift=10.75cm, yshift=-2.45cm]R.north west);
+
+    \node[fig state]     (nS0) at (S0) {$S_{0}$};
+    \node[fig highlight] (nA)  at (PA) {A};
+    \node[fig highlight] (nB)  at (PB) {B};
+    \node[fig highlight] (nC)  at (PC) {C};
+    \node[fig state]     (nST) at (ST) {$S_{\mathrm{target}}$};
+
+    \draw[fig flow] (nS0) -- (nA)
+        node[fig label, midway, above=8pt] {$C_{1}$};
+    \draw[fig flow] (nA) -- (nB)
+        node[fig label, midway, above=8pt] {$C_{2}$};
+    \draw[fig flow] (nB) -- (nC)
+        node[fig label, midway, above=8pt] {$C_{3}$};
+    \draw[fig flow] (nC) -- (nST)
+        node[fig label, midway, above=8pt] {$C_{4}$};
+
+    \node[fig note, anchor=south] at ([yshift=0.35cm]R.south)
+        {Urutan jalur disimpan sebagai \textit{path data}.\\[2pt]
+         Keadaan awal $S_{0}$ dan keadaan target $S_{\mathrm{target}}$ eksplisit.
+         Transisi dilambangkan $C_{t}$.};
+
+    \end{tikzpicture}%
+    }
+    \caption{Perbandingan pemodelan interaksi tradisional orde-pertama (dyadic) dengan jalur \textit{path data} MOGen \parencite{gote2023locating}}
+    \label{fig:chapter2-mogen-vs-first-order}
+\end{figure}
