@@ -2,7 +2,7 @@
 %
 % Konfigurasi dokumen LaTeX untuk laporan tesis IF ITB
 %
-% @author Petra Novandi
+% @author Muhammad Rizain Firdaus
 %
 %-------------------------------------------------------------------%
 %
@@ -22,10 +22,60 @@
 \usepackage[bahasa]{babel}
 
 % Format citation
-\usepackage[backend=bibtex,citestyle=authoryear]{biblatex}
+\usepackage[backend=bibtex,style=authoryear,sorting=nyt,maxcitenames=2,maxbibnames=99,
+  giveninits=true,uniquename=false,uniquelist=false,dashed=false,url=false,isbn=false]{biblatex}
+\addbibresource{references.bib}
+\let\parentcite\parencite
+
+% biblatex tidak punya lbx Indonesia; petakan babel bahasa → english lbx
+\DeclareLanguageMapping{bahasa}{english}
+\DeclareLanguageMapping{indonesian}{english}
+\newcommand{\IndoAndOthers}{dkk\adddot}
+% String berlaku untuk bahasa aktif (bahasa) maupun lbx english yang dipetakan
+\DefineBibliographyStrings{bahasa}{%
+  and       = {dan},
+  andothers = {dkk\adddot},
+  andmore   = {dkk\adddot},
+  in        = {Dalam},
+  page      = {hlm\adddot},
+  pages     = {hlm\adddot},
+  edition   = {ed\adddot},
+}
+\DefineBibliographyStrings{english}{%
+  and       = {dan},
+  andothers = {dkk\adddot},
+  andmore   = {dkk\adddot},
+  in        = {Dalam},
+  page      = {hlm\adddot},
+  pages     = {hlm\adddot},
+  edition   = {ed\adddot},
+}
+\renewbibmacro*{name:andothers}{%
+  \ifboolexpr{%
+    test {\ifnumequal{\value{listcount}}{\value{liststop}}}%
+    and test \ifmorenames%
+  }{%
+    \ifnumgreater{\value{liststop}}{1}{\finalandcomma}{}%
+    \printdelim{andothersdelim}\IndoAndOthers
+  }{}%
+}
+\renewbibmacro*{list:andothers}{%
+  \ifboolexpr{%
+    test {\ifnumequal{\value{listcount}}{\value{liststop}}}%
+    and test \ifmoreitems%
+  }{%
+    \ifnumgreater{\value{liststop}}{1}{\finalandcomma}{}%
+    \printdelim{andmoredelim}\IndoAndOthers
+  }{}%
+}
 
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{tikz}
+\usetikzlibrary{positioning,fit,calc,arrows.meta,shadows}
+\usepackage{fontawesome5}
 \usepackage{titling}
 \usepackage{blindtext}
 \usepackage{sectsty}
@@ -33,24 +83,84 @@
 \usepackage{etoolbox}
 \usepackage{hyperref}       % Package untuk link di daftar isi.
 \usepackage{titlesec}       % Package Format judul
-\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{ragged2e}
+\usepackage{caption}
+\usepackage{microtype}
 \usepackage{csvsimple}
 
 % Line satu setengah spasi
 \renewcommand{\baselinestretch}{1.5}
 
+% Paragraf akademik: indent baris pertama, justify rata kiri-kanan
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0pt plus 0.1pt}
+\emergencystretch=2.5em
+\tolerance=1500
+
+% Caption gambar/tabel: centered, agak kecil
+\captionsetup{
+  justification=centering,
+  singlelinecheck=false,
+  font=small,
+  labelfont={small,bf},
+  textfont=small,
+  skip=0.4em,
+  margin=1em,
+}
+\AtBeginDocument{\justifying}
+
 % Setting judul
 \chapterfont{\centering \Large}
+
+\makeatletter
+% Paragraf pertama setelah heading ikut di-indent
+\renewcommand{\@afterindentfalse}{\@afterindenttrue}
+
 \titleformat{\chapter}[display]
   {\Large\centering\bfseries}
   {\chaptertitlename\ \thechapter}{0pt}
-    {\Large\bfseries\uppercase}
+  {\Large\bfseries\uppercase}
 
-% Setting nomor pada subbsubsubbab
+% Judul semakin ke dalam; isi pakai parindent (tanpa leftskip → list tidak acak)
+\titleformat{\section}
+  {\normalfont\Large\bfseries\raggedright}
+  {\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\raggedright}
+  {\thesubsection}{1em}{}
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries\raggedright}
+  {\thesubsubsection}{1em}{}
+\titleformat{\paragraph}[block]
+  {\normalfont\normalsize\bfseries\raggedright}
+  {}{0pt}{}
+\titlespacing*{\section}{0pt}{2.0ex plus .5ex minus .2ex}{1.0ex plus .2ex}
+\titlespacing*{\subsection}{1.25cm}{1.75ex plus .4ex minus .2ex}{0.8ex plus .2ex}
+\titlespacing*{\subsubsection}{2.0cm}{1.5ex plus .3ex minus .1ex}{0.6ex plus .1ex}
+\titlespacing*{\paragraph}{2.5cm}{1.25ex plus .3ex minus .1ex}{0.5ex plus .1ex}
+
+% Daftar bernomor/butir: indent jelas, bullet sejajar, teks justify
+\setlist{
+  nosep,
+  topsep=0.5em,
+  itemsep=0.35em,
+  parsep=0.15em,
+  leftmargin=2.2em,
+  itemindent=0pt,
+  labelsep=0.5em,
+  listparindent=\parindent,
+}
+\setlist[enumerate]{label=\arabic*., leftmargin=2.5em}
+\setlist[itemize]{label=\textbullet, leftmargin=2.0em}
+\setlist[enumerate,1]{leftmargin=2.5em}
+\setlist[itemize,1]{leftmargin=2.0em}
+\setlist[itemize,2]{leftmargin=1.8em}
+
+\AtBeginEnvironment{figure}{\centering}
+\AtBeginEnvironment{table}{\centering}
+
 \setcounter{secnumdepth}{3}
-
-\makeatletter
-
 \makeatother
 
 % Counter untuk figure dan table.
